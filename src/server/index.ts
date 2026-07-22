@@ -1,14 +1,9 @@
-import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
-import { initDB, query, get, run } from "./db.js";
+import { createApp, createRoute, z } from "@clawnify/app";
+import { query, get, run } from "./db.js";
 
 type Env = { Bindings: { DB: D1Database } };
 
-const app = new OpenAPIHono<Env>();
-
-app.use("*", async (c, next) => {
-  initDB(c.env);
-  await next();
-});
+const app = createApp<Env>({ title: "Board App API", version: "1.0.0" });
 
 // ── Schemas ──────────────────────────────────────────────────────────
 
@@ -302,9 +297,5 @@ app.get("/api/stats", async (c) => {
   const elements = await get<{ c: number }>("SELECT COUNT(*) as c FROM elements");
   return c.json({ boards: boards?.c ?? 0, elements: elements?.c ?? 0 });
 });
-
-// ── OpenAPI doc ─────────────────────────────────────────────────────
-
-app.doc("/openapi.json", { openapi: "3.0.0", info: { title: "Board App API", version: "1.0.0" } });
 
 export default app;
