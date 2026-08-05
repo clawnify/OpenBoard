@@ -1,5 +1,7 @@
 # Open Board
 
+[![Deploy with Clawnify](https://app.clawnify.com/deploy-button.svg)](https://app.clawnify.com/deploy?repo=clawnify/open-board)
+
 An infinite canvas whiteboard for brainstorming, diagramming, and visual collaboration — like Miro. Built with **Preact + Tailwind CSS + Hono + SQLite**. Deploys to Cloudflare Workers via [Clawnify](https://clawnify.com).
 
 ## Features
