@@ -305,6 +305,6 @@ app.get("/api/stats", async (c) => {
 
 // ── OpenAPI doc ─────────────────────────────────────────────────────
 
-app.doc("/openapi.json", { openapi: "3.0.0", info: { title: "Board App API", version: "1.0.0" } });
+app.doc("/openapi.json", { openapi: "3.0.0", info: { title: "OpenBoard API", version: "1.0.0" } });
 
 export default app;
