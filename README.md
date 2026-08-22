@@ -1,6 +1,6 @@
 # OpenBoard
 
-[![Deploy with Clawnify](https://app.clawnify.com/deploy-button.svg)](https://app.clawnify.com/deploy?repo=clawnify/open-board)
+[![Deploy with Clawnify](https://app.clawnify.com/deploy-button.svg)](https://app.clawnify.com/deploy?repo=clawnify/OpenBoard)
 
 An infinite canvas whiteboard for brainstorming, diagramming, and visual collaboration — like Miro. Built with **Preact + Tailwind CSS + Hono + SQLite**. Deploys to Cloudflare Workers via [Clawnify](https://clawnify.com).
 
@@ -22,7 +22,7 @@ An infinite canvas whiteboard for brainstorming, diagramming, and visual collabo
 ## Quickstart
 
 ```bash
-git clone https://github.com/clawnify/open-board.git
+git clone https://github.com/clawnify/OpenBoard.git
 cd open-board
 pnpm install
 ```
