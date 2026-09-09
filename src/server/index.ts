@@ -1,12 +1,12 @@
-import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
-import { initDB, query, get, run } from "./db.js";
+import { createApp, createRoute, z } from "@clawnify/app";
+import { query, get, run } from "./db.js";
 
 type Env = { Bindings: { DB: D1Database } };
 
-const app = new OpenAPIHono<Env>();
+const app = createApp<Env>({ title: "OpenBoard", version: "1.0.0" });
 
-app.use("*", async (c, next) => {
-  initDB(c.env);
+// Runs after createApp()'s own initDB(c.env) middleware, so the DB is ready.
+app.use("*", async (_c, next) => {
   await ensureSeeded();
   await next();
 });
@@ -334,9 +334,5 @@ app.get("/api/stats", async (c) => {
   const elements = await get<{ c: number }>("SELECT COUNT(*) as c FROM elements");
   return c.json({ boards: boards?.c ?? 0, elements: elements?.c ?? 0 });
 });
-
-// ── OpenAPI doc ─────────────────────────────────────────────────────
-
-app.doc("/openapi.json", { openapi: "3.0.0", info: { title: "OpenBoard API", version: "1.0.0" } });
 
 export default app;
