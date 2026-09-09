@@ -3,7 +3,44 @@ import { query, get, run } from "./db.js";
 
 type Env = { Bindings: { DB: D1Database } };
 
-const app = createApp<Env>({ title: "Board App API", version: "1.0.0" });
+const app = createApp<Env>({ title: "OpenBoard", version: "1.0.0" });
+
+// Runs after createApp()'s own initDB(c.env) middleware, so the DB is ready.
+app.use("*", async (_c, next) => {
+  await ensureSeeded();
+  await next();
+});
+
+// ── Sample data ────────────────────────────────────────────────
+// schema.sql is applied as DDL only by the deploy pipeline, so the welcome
+// board is seeded here instead. It only runs while the boards table is still
+// empty, so deleting the sample board never brings it back.
+
+let seeded = false;
+
+async function ensureSeeded(): Promise<void> {
+  if (seeded) return;
+  try {
+    const existing = await get<{ c: number }>("SELECT COUNT(*) as c FROM boards");
+    if ((existing?.c ?? 0) === 0) {
+      await run("INSERT OR IGNORE INTO boards (id, name) VALUES ('demo', 'Welcome Board')");
+      await run(
+        `INSERT OR IGNORE INTO elements (id, board_id, type, x, y, width, height, z_index, props_json) VALUES
+          ('s1', 'demo', 'sticky', -300, -150, 220, 200, 1, '{"text":"Welcome to OpenBoard!","color":"#fef08a"}'),
+          ('s2', 'demo', 'sticky', 0, -150, 220, 200, 2, '{"text":"Drag to move, scroll to zoom, Space+drag to pan","color":"#bbf7d0"}'),
+          ('s3', 'demo', 'sticky', 300, -150, 220, 200, 3, '{"text":"Double-click a sticky to edit text","color":"#bfdbfe"}'),
+          ('sh1', 'demo', 'shape', -200, 150, 160, 160, 4, '{"shapeType":"rect","fill":"#6366f1","stroke":"#4f46e5","strokeWidth":2}'),
+          ('sh2', 'demo', 'shape', 50, 150, 160, 160, 5, '{"shapeType":"ellipse","fill":"#f472b6","stroke":"#ec4899","strokeWidth":2}'),
+          ('sh3', 'demo', 'shape', 300, 150, 160, 160, 6, '{"shapeType":"diamond","fill":"#34d399","stroke":"#10b981","strokeWidth":2}'),
+          ('t1', 'demo', 'text', -100, -300, 400, 50, 7, '{"text":"OpenBoard - Infinite Canvas Whiteboard","fontSize":28,"fontWeight":"700","color":"#1e293b"}')`
+      );
+    }
+    seeded = true;
+  } catch {
+    // Sample data must never fail a request; retry on the next one.
+    seeded = false;
+  }
+}
 
 // ── Schemas ──────────────────────────────────────────────────────────
 

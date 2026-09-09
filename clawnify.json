@@ -1,7 +1,7 @@
 {
   "$schema": "https://app.clawnify.com/schema/v1/clawnify.json",
   "version": 1,
-  "name": "Board App",
+  "name": "OpenBoard",
   "description": "Infinite canvas whiteboard for brainstorming, diagramming, and visual collaboration. Supports sticky notes, shapes, freehand drawing, connectors, and text — like Miro. Best for team brainstorming tools, wireframing, mind mapping, or any visual planning board.",
   "icon": "icon.svg",
   "tags": ["whiteboard", "board", "canvas", "collaboration", "brainstorm"],

@@ -1,4 +1,6 @@
-# Open Board
+# OpenBoard
+
+[![Deploy with Clawnify](https://app.clawnify.com/deploy-button.svg)](https://app.clawnify.com/deploy?repo=clawnify/OpenBoard)
 
 An infinite canvas whiteboard for brainstorming, diagramming, and visual collaboration — like Miro. Built with **Preact + Tailwind CSS + Hono + SQLite**. Deploys to Cloudflare Workers via [Clawnify](https://clawnify.com).
 
@@ -20,7 +22,7 @@ An infinite canvas whiteboard for brainstorming, diagramming, and visual collabo
 ## Quickstart
 
 ```bash
-git clone https://github.com/clawnify/open-board.git
+git clone https://github.com/clawnify/OpenBoard.git
 cd open-board
 pnpm install
 ```
@@ -31,7 +33,7 @@ Start the dev server:
 pnpm dev
 ```
 
-Open `http://localhost:5179` in your browser. The database schema and demo board are applied automatically on startup.
+Open `http://localhost:5179` in your browser. The database schema is applied automatically, and the sample board is seeded by the API on its first request.
 
 ### Agent Mode
 
@@ -60,7 +62,7 @@ src/
     index.ts    — Hono API with OpenAPI/Zod validation
     db.ts       — SQLite database adapter (better-sqlite3 / D1)
     dev.ts      — Development server with static file serving
-    schema.sql  — Database schema (boards, elements) + demo seed
+    schema.sql  — Database schema (boards, elements), DDL only
   client/
     app.tsx           — Root component with Home/Editor routing
     context.tsx       — Preact context for board state

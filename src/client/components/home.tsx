@@ -39,7 +39,7 @@ export function Home({ boards, navigate, createBoard, deleteBoard, renameBoard }
             <div class="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center">
               <Layout class="w-4 h-4 text-white" />
             </div>
-            <h1 class="text-xl font-semibold text-slate-900">Open Board</h1>
+            <h1 class="text-xl font-semibold text-slate-900">OpenBoard</h1>
           </div>
           <button
             onClick={handleCreate}
